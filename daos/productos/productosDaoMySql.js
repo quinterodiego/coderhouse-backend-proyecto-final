@@ -1,4 +1,4 @@
-import ContenedorSQL from "../../contenedores/contenedorSQL.js.js";
+import ContenedorSQL from "../../contenedores/contenedorSQL.js";
 import config from './../../config.js'; 
 
 class ProductosDaoMySql extends ContenedorSQL {

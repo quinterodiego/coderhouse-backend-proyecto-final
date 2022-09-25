@@ -5,8 +5,8 @@ dotenv.config();
 
 switch (process.env.PERS) {
     case 'json':
-        const { default: ProductosDaoArchivo } = await import('./productos/ProductosDaoArchivo.js');
-        const { default: CarritosDaoArchivo } = await import('./carritos/CarritosDaoArchivo.js');
+        const { default: ProductosDaoArchivo } = await import('./productos/productosDaoArchivo.js');
+        const { default: CarritosDaoArchivo } = await import('./carritos/carritosDaoArchivo.js');
         productosDao = new ProductosDaoArchivo();
         carritosDao = new CarritosDaoArchivo();
         break

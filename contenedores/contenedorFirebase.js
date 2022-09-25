@@ -1,11 +1,11 @@
 import admin from "firebase-admin"
 import config from '../config.js'
 
-admin.initializeApp({
+const app = !admin.apps.length ? admin.initializeApp({
     credential: admin.credential.cert(config.firebase)
-})
+}) : admin.app();
 
-const db = admin.firestore();
+const db = app.firestore();
 const query = db.collection('productos');
 
 class ContenedorFirebase {
