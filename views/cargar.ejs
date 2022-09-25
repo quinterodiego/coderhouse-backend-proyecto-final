@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+    <%- include('./partials/head', { titulo: 'Cargar' }) %>
+    <body>
+      <%- include('./partials/header') %>
+      <div class="container">
+        <div class="text-center">
+          <h2>Cargar Producto</h2>
+        </div>
+        <form id="form-product" class="mb-5">
+          <div class="mb-3">
+            <label for="title" class="form-label">Nombre</label>
+            <input type="text" class="form-control" name="title" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Descripción</label>
+            <input type="text" class="form-control" name="description" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="thumbnail" class="form-label">URL Imagen</label>
+            <input type="text" class="form-control" name="thumbnail" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="code" class="form-label">Código</label>
+            <input type="text" class="form-control" name="code" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="price" class="form-label">Precio</label>
+            <input type="number" class="form-control" name="price" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="stock" class="form-label">Stock</label>
+            <input type="number" class="form-control" name="stock" aria-describedby="emailHelp">
+          </div>
+          <button type="submit" class="btn btn-primary">Cargar</button>
+        </form>
+      </div>
+      <%- include('./partials/footer') %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+  </body>
+</html>

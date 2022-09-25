@@ -1,0 +1,28 @@
+{
+  "name": "test",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:8080",
+  "type": "module",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "moment": "^2.29.4",
+    "nodemon": "^2.0.19",
+    "socket.io": "^4.5.1",
+    "firebase-admin": "^9.11.0",
+    "knex": "^0.95.10",
+    "mongodb": "^3.6.11",
+    "mongoose": "^5.13.7",
+    "mysql": "^2.18.1",
+    "sqlite3": "^5.0.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "create:tables": "node ./scripts/crearTablas.js",
+    "start:index": "node ./server.js",
+    "start": "npm run create:tables && npm run start:index"
+  }
+}
