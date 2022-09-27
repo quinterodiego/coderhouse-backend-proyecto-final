@@ -23,6 +23,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "create:tables": "node ./scripts/crearTablas.js",
     "start:index": "node ./server.js",
-    "start": "npm run create:tables && npm run start:index"
+    "start": "npm run create:tables && npm run start:index",
+    "dev": "npm run create:tables && nodemon index.js"
   }
 }

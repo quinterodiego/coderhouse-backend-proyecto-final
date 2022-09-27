@@ -30,7 +30,6 @@ routerCarrito.post('/', async (req, res) => {
 routerCarrito.post('/:id/productos', async (req, res) => {
     const id = req.params.id;
     const idProducto = req.body.id;
-    console.log(idProducto)
     const carrito = await carritosApi.getById(id);
     carrito.productos.push(idProducto);
     await carritosApi.updateById(id, carrito)
@@ -46,7 +45,11 @@ routerCarrito.delete('/:id', async (req, res) => {
 routerCarrito.delete('/:id/productos/:id_prod', async (req, res) => {
     const id = req.params.id;
     const id_prod = req.params.id_prod;
-    await carritosApi.deleteByProductId(id, id_prod);
+    const carrito = await carritosApi.getById(id);
+    const index = carrito.productos.indexOf(id_prod);
+    carrito.productos.splice(index, 1);
+    console.log(carrito.productos)
+    await carritosApi.updateById(id, carrito);
     res.send({message: 'Producto eliminado'});
 });
 
