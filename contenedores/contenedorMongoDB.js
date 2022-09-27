@@ -9,10 +9,10 @@ class Contenedor {
         this.coleccion = mongoose.model(nombreColeccion, this.productoSchema)
     }
 
-    save = async ( producto ) => {
+    save = async ( data ) => {
         try {
-            const product = this.coleccion(producto)
-            await product.save(producto);
+            const item = this.coleccion(data)
+            await item.save(data);
         }
         catch ( error ) {
             console.error( error );
@@ -64,17 +64,9 @@ class Contenedor {
         }
     }
 
-    updateById = async (id, item) => {
+    updateById = async (item) => {
         try {
-            await this.coleccion.updateOne({ _id: id}, {
-                title,
-                price,
-                thumbnail,
-                code,
-                stock,
-                description,
-                timestamp
-            })
+            await this.coleccion.updateOne({ _id: item._id}, {$set: item})
         } catch (error) {
             console.error( error );
             console.log('Hubo un error en la ejecución');

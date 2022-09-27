@@ -31,8 +31,8 @@ routerCarrito.post('/:id/productos', async (req, res) => {
     const id = req.params.id;
     const idProducto = req.body;
     const carrito = await carritosApi.getById(id);
-    // carrito.productos.push(producto);
-    await carritosApi.updateById(id, idProducto)
+    carrito.productos.push(idProducto);
+    await carritosApi.updateById(carrito)
     res.send({message: 'Producto agregado al carrito'});
 });
 
