@@ -6,7 +6,6 @@ const app = !admin.apps.length ? admin.initializeApp({
 }) : admin.app();
 
 const db = app.firestore();
-const query = db.collection('productos');
 
 class ContenedorFirebase {
 
@@ -14,11 +13,11 @@ class ContenedorFirebase {
         this.coleccion = db.collection(nombreColeccion)
     }
 
-    save = async ( producto ) => {
+    save = async ( item ) => {
         try {
-            const doc = query.doc();
-            await doc.create(producto);
-            console.log('Producto creado');
+            const doc = this.coleccion.doc();
+            await doc.create(item);
+            console.log('Item creado');
         }
         catch ( error ) {
             console.error( error );
@@ -28,10 +27,10 @@ class ContenedorFirebase {
 
     getById = async ( id ) => {
         try {
-            const doc = query.doc(id);
-            const item = await doc.get();
-            const producto = item.data();
-            return producto;
+            const doc = this.coleccion.doc(id);
+            const data = await doc.get();
+            const item = data.data();
+            return item;
         }
         catch ( error ) {
             console.error( error );
@@ -41,15 +40,10 @@ class ContenedorFirebase {
 
     getAll = async () => {
         try {
-            const querySnapshot = await query.get();
+            const querySnapshot = await this.coleccion.get();
             const docs = querySnapshot.docs;
 
-            const response = docs.map((doc) => ({
-                id: doc.id,
-                title: doc.data().title,
-                price: doc.data().price,
-                thumbnail: doc.data().thumbnail
-            }))
+            const response = docs.map(doc => doc.data())
 
             return response;
         } catch ( error ) {
@@ -60,7 +54,7 @@ class ContenedorFirebase {
 
     deleteById = async ( id ) => {
         try {
-            const doc = query.doc(id);
+            const doc = this.coleccion.doc(id);
             await doc.delete();
             console.log('Producto eliminado');
         } catch ( error ) {
@@ -71,7 +65,7 @@ class ContenedorFirebase {
     
     deleteAll = async () => {
         try {
-            await query.listDocuments().then(doc => {
+            await this.coleccion.listDocuments().then(doc => {
                 doc.map((d) => {
                     d.delete()
                 })
@@ -82,20 +76,11 @@ class ContenedorFirebase {
         }
     }
 
-    updateById = async (id, product) => {
+    updateById = async (id, item) => {
         try {
-            const { title, price, thumbnail, code, description, stock, timestamp } = product;
-            const doc = query.doc(id);
-            const item = await doc.update({
-                title,
-                price,
-                thumbnail,
-                code,
-                stock,
-                description,
-                timestamp
-            })
-            console.log('Producto actualizado');
+            const doc = this.coleccion.doc(id);
+            await doc.update(item)
+            console.log('Item actualizado');
         } catch (error) {
             console.error( error );
             console.log('Hubo un error en la ejecución');

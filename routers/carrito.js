@@ -1,6 +1,7 @@
 import express from 'express';
 const {Router} = express;
 import { carritosDao as carritosApi } from '../daos/index.js';
+import moment from 'moment';
 
 const routerCarrito = Router();
 
@@ -15,17 +16,24 @@ routerCarrito.get('/:id/productos', async (req, res) => {
 });
 
 routerCarrito.post('/', async (req, res) => {
-    const carrito = req.body;
-    const id = await carritosApi.save(carrito);
+    const date = new Date();
+    const carrito = {
+        timestamp: moment(date).format('DD/MM/YYYY HH:mm:ss'),
+        productos: []
+    };
+    await carritosApi.save(carrito);
     res.send({
-        message: `Carrito creado id: ${id}`
+        message: `Carrito creado`
     })
 });
 
 routerCarrito.post('/:id/productos', async (req, res) => {
     const id = req.params.id;
-    const producto = req.body;
-    await carritosApi.saveProduct(id, producto)
+    const idProducto = req.body.id;
+    console.log(idProducto)
+    const carrito = await carritosApi.getById(id);
+    carrito.productos.push(idProducto);
+    await carritosApi.updateById(id, carrito)
     res.send({message: 'Producto agregado al carrito'});
 });
 
