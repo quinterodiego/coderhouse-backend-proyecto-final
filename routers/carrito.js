@@ -40,7 +40,6 @@ routerCarrito.delete('/:id', async (req, res) => {
     const id = req.params.id;
     const carrito = await carritosApi.getById(id);
     carrito.productos = [];
-    console.log('Vacio carrito: ', carrito)
     await carritosApi.deleteById(id);
     res.send({message: 'Carrito eliminado'});
 });
@@ -51,7 +50,7 @@ routerCarrito.delete('/:id/productos/:id_prod', async (req, res) => {
     const carrito = await carritosApi.getById(id);
     const productos = carrito.productos.filter(p => p.id != id_prod);
     carrito.productos = productos;
-    await carritosApi.updateById(id, carrito);
+    await carritosApi.updateById(carrito);
     res.send({message: 'Producto eliminado'});
 });
 
