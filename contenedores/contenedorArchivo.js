@@ -6,22 +6,22 @@ class Contenedor {
         this.path = path;
     }
 
-    save = async ( producto ) => {
+    save = async ( item ) => {
         try {
             const data = await fs.promises.readFile( this.path, 'utf-8' );
-            const productos = JSON.parse( data );
+            const items = JSON.parse( data );
             let id = 0;
-            if(productos.length > 0) {
-                const IdsProductos = productos.map(p => p.id);
-                id = Math.max(...IdsProductos) + 1;
+            if(items.length > 0) {
+                const IdsItems = items.map(p => p.id);
+                id = Math.max(...IdsItems) + 1;
             } else {
                 id = 1;
             }
             const date = new Date();
             const timestamp = moment(date).format('DD/MM/YYYY HH:mm:ss');
-            const nuevoProducto = { ...producto, id, timestamp };
-            productos.push( nuevoProducto );
-            await fs.promises.writeFile( this.path, JSON.stringify( productos, null, 2 ));
+            const nuevoItem = { ...item, id, timestamp };
+            items.push( nuevoItem );
+            await fs.promises.writeFile( this.path, JSON.stringify( items, null, 2 ));
             console.log(`ID: ${id}`);
         }
         catch ( error ) {
@@ -33,12 +33,12 @@ class Contenedor {
     getById = async ( id ) => {
         try {
             const data = await fs.promises.readFile( this.path, 'utf-8' );
-            const productos = JSON.parse( data );
-            const productoBuscado = productos.filter( p => p.id == id);
-            if (productoBuscado.length > 0) {
-                return productoBuscado 
+            const items = JSON.parse( data );
+            const itemBuscado = items.filter( i => i.id == id);
+            if (itemBuscado.length > 0) {
+                return itemBuscado[0];
             } else {
-                return null
+                return null;
             }
         }
         catch ( error ) {
@@ -50,8 +50,8 @@ class Contenedor {
     getAll = async () => {
         try {
             const data = await fs.promises.readFile( this.path, 'utf-8' );
-            const productos = JSON.parse( data );
-            return productos;
+            const items = JSON.parse( data );
+            return items;
         } catch ( error ) {
             console.error( error );
             console.log('Hubo un error en la ejecución');
@@ -61,9 +61,9 @@ class Contenedor {
     deleteById = async ( id ) => {
         try {
             const data = await fs.promises.readFile( this.path, 'utf-8' );
-            const productos = JSON.parse( data );
-            const nuevosProductos = productos.filter( p => p.id !== id);
-            await fs.promises.writeFile( this.path, JSON.stringify(nuevosProductos, null, 2));
+            const items = JSON.parse( data );
+            const nuevosItems = items.filter( p => p.id != id);
+            await fs.promises.writeFile( this.path, JSON.stringify(nuevosItems, null, 2));
         } catch ( error ) {
             console.error( error );
             console.log('Hubo un error en la ejecución');
@@ -79,14 +79,14 @@ class Contenedor {
         }
     }
 
-    updateById = async (id, product) => {
+    updateById = async (id, item) => {
         try {
             const data = await fs.promises.readFile( this.path, 'utf-8' );
-            let productos = JSON.parse( data );
-            productos = productos.filter( p => p.id != id);
-            product.id = parseInt(id);
-            productos.push(product);
-            productos.sort(function (a, b) {
+            let items = JSON.parse( data );
+            items = items.filter( p => p.id != id);
+            item.id = parseInt(id);
+            items.push(item);
+            items.sort(function (a, b) {
                 if (a.id > b.id) {
                     return 1;
                 }
@@ -95,7 +95,7 @@ class Contenedor {
                 }
                 return 0;
             });
-            await fs.promises.writeFile( this.path, JSON.stringify(productos, null, 2));
+            await fs.promises.writeFile( this.path, JSON.stringify(items, null, 2));
         } catch (error) {
             console.error( error );
             console.log('Hubo un error en la ejecución');

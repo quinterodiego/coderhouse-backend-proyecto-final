@@ -11,7 +11,7 @@ routerCarrito.get('/:id/productos', async (req, res) => {
     if (carrito === null ) {
         res.send({ error: 'Carrito no encontrado' });
     } else {
-        res.send(carrito);
+        res.send({Productos: carrito.productos });
     }
 });
 
@@ -29,16 +29,19 @@ routerCarrito.post('/', async (req, res) => {
 
 routerCarrito.post('/:id/productos', async (req, res) => {
     const id = req.params.id;
-    const idProducto = req.body.id;
+    const producto = req.body;
     const carrito = await carritosApi.getById(id);
-    carrito.productos.push(idProducto);
+    carrito.productos.push(producto);
     await carritosApi.updateById(id, carrito)
     res.send({message: 'Producto agregado al carrito'});
 });
 
 routerCarrito.delete('/:id', async (req, res) => {
     const id = req.params.id;
-    await carritosApi.deleteByCartId(id);
+    const carrito = await carritosApi.getById(id);
+    carrito.productos = [];
+    console.log('Vacio carrito: ', carrito)
+    await carritosApi.deleteById(id);
     res.send({message: 'Carrito eliminado'});
 });
 
@@ -46,9 +49,8 @@ routerCarrito.delete('/:id/productos/:id_prod', async (req, res) => {
     const id = req.params.id;
     const id_prod = req.params.id_prod;
     const carrito = await carritosApi.getById(id);
-    const index = carrito.productos.indexOf(id_prod);
-    carrito.productos.splice(index, 1);
-    console.log(carrito.productos)
+    const productos = carrito.productos.filter(p => p.id != id_prod);
+    carrito.productos = productos;
     await carritosApi.updateById(id, carrito);
     res.send({message: 'Producto eliminado'});
 });

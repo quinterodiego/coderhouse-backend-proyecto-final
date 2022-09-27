@@ -17,7 +17,7 @@ routerProductos.get('/:id?', isAdmin, async (req, res) => {
     }
 });
 
-routerProductos.post('/', async (req, res) => {
+routerProductos.post('/', isAdmin, async (req, res) => {
     const producto = req.body;
     await productosApi.save(producto);
     res.send({

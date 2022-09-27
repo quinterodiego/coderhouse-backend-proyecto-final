@@ -5,10 +5,6 @@ class CarritosDaoArchivo extends ContenedorArchivo {
     constructor() {
         super('./DB/carritos.json')
     }
-
-    async guardar(carrito = { productos: [] }) {
-        return super.guardar(carrito)
-    }
 }
 
 export default CarritosDaoArchivo
