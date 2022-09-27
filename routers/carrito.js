@@ -8,7 +8,7 @@ const routerCarrito = Router();
 routerCarrito.get('/:id/productos', async (req, res) => {
     const id = req.params.id;
     const carrito = await carritosApi.getById(id);
-    if (carrito === null ) {
+    if (carrito == null ) {
         res.send({ error: 'Carrito no encontrado' });
     } else {
         res.send({Productos: carrito.productos });
@@ -29,10 +29,10 @@ routerCarrito.post('/', async (req, res) => {
 
 routerCarrito.post('/:id/productos', async (req, res) => {
     const id = req.params.id;
-    const producto = req.body;
+    const idProducto = req.body;
     const carrito = await carritosApi.getById(id);
-    carrito.productos.push(producto);
-    await carritosApi.updateById(id, carrito)
+    // carrito.productos.push(producto);
+    await carritosApi.updateById(id, idProducto)
     res.send({message: 'Producto agregado al carrito'});
 });
 

@@ -22,8 +22,12 @@ class Contenedor {
 
     getById = async ( id ) => {
         try {
-            const producto = await this.coleccion.findById(id);
-            return producto;
+            const item = await this.coleccion.findById(id);
+            if(item) {
+                return item;
+            } else {
+                return null;
+            }
         }
         catch ( error ) {
             console.error( error );
@@ -60,9 +64,8 @@ class Contenedor {
         }
     }
 
-    updateById = async (id, product) => {
+    updateById = async (id, item) => {
         try {
-            const { title, price, thumbnail, code, stock, description, timestamp } = product;
             await this.coleccion.updateOne({ _id: id}, {
                 title,
                 price,
