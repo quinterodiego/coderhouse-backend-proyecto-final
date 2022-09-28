@@ -44,7 +44,6 @@ class ContenedorFirebase {
             const docs = querySnapshot.docs;
 
             const response = docs.map(doc => doc.data())
-
             return response;
         } catch ( error ) {
             console.error( error );

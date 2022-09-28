@@ -22,7 +22,7 @@ class Contenedor {
             const nuevoItem = { ...item, id, timestamp };
             items.push( nuevoItem );
             await fs.promises.writeFile( this.path, JSON.stringify( items, null, 2 ));
-            console.log(`ID: ${id}`);
+            return id;
         }
         catch ( error ) {
             console.error( error );
@@ -84,7 +84,7 @@ class Contenedor {
             const data = await fs.promises.readFile( this.path, 'utf-8' );
             let items = JSON.parse( data );
             items = items.filter( p => p.id != id);
-            item.id = parseInt(id);
+            // item.id = parseInt(id);
             items.push(item);
             items.sort(function (a, b) {
                 if (a.id > b.id) {

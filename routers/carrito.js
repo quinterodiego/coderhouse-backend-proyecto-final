@@ -17,13 +17,14 @@ routerCarrito.get('/:id/productos', async (req, res) => {
 
 routerCarrito.post('/', async (req, res) => {
     const date = new Date();
+    const timestamp = moment(date).format('DD/MM/YYYY HH:mm:ss');
     const carrito = {
-        timestamp: moment(date).format('DD/MM/YYYY HH:mm:ss'),
+        timestamp,
         productos: []
     };
-    await carritosApi.save(carrito);
+    const id = await carritosApi.save(carrito);
     res.send({
-        message: `Carrito creado`
+        message: `Carrito creado con id: ${id}`
     })
 });
 
@@ -32,7 +33,7 @@ routerCarrito.post('/:id/productos', async (req, res) => {
     const idProducto = req.body;
     const carrito = await carritosApi.getById(id);
     carrito.productos.push(idProducto);
-    await carritosApi.updateById(carrito)
+    await carritosApi.updateById(id, carrito)
     res.send({message: 'Producto agregado al carrito'});
 });
 

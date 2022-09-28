@@ -11,8 +11,9 @@ class Contenedor {
 
     save = async ( data ) => {
         try {
-            const item = this.coleccion(data)
-            await item.save(data);
+            await this.coleccion.insertMany(data);
+            const carrito = await this.coleccion.find().sort({timestamp: -1}).limit(1);
+            return carrito[0]._id;
         }
         catch ( error ) {
             console.error( error );
@@ -64,9 +65,9 @@ class Contenedor {
         }
     }
 
-    updateById = async (item) => {
+    updateById = async (id, item) => {
         try {
-            await this.coleccion.updateOne({ _id: item._id}, {$set: item})
+            await this.coleccion.updateOne({ _id: id}, {$set: item})
         } catch (error) {
             console.error( error );
             console.log('Hubo un error en la ejecución');
