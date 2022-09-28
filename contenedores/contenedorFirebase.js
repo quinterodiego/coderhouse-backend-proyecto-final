@@ -17,7 +17,23 @@ class ContenedorFirebase {
         try {
             const doc = this.coleccion.doc();
             await doc.create(item);
+            const querySnapshot = await this.coleccion.get();
+            const docs = querySnapshot.docs;
+            const response = docs.map((doc) => {
+                return { id: doc.id, data: doc.data()}
+            })
+            response.sort(function (a, b) {
+                if (a.data.timestamp > b.data.timestamp) {
+                    return 1;
+                }
+                if (a.data.timestamp < b.data.timestamp) {
+                    return -1;
+                }
+                return 0;
+            });
+            const index = response.length - 1
             console.log('Item creado');
+            return response[index].id;
         }
         catch ( error ) {
             console.error( error );
