@@ -51,7 +51,7 @@ routerCarrito.delete('/:id/productos/:id_prod', async (req, res) => {
     const carrito = await carritosApi.getById(id);
     const productos = carrito.productos.filter(p => p.id != id_prod);
     carrito.productos = productos;
-    await carritosApi.updateById(carrito);
+    await carritosApi.updateById(id, carrito);
     res.send({message: 'Producto eliminado'});
 });
 
