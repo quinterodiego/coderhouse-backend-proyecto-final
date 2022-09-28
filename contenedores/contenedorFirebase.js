@@ -42,8 +42,9 @@ class ContenedorFirebase {
         try {
             const querySnapshot = await this.coleccion.get();
             const docs = querySnapshot.docs;
-
-            const response = docs.map(doc => doc.data())
+            const response = docs.map((doc) => {
+                return { id: doc.id, data: doc.data()}
+            })
             return response;
         } catch ( error ) {
             console.error( error );

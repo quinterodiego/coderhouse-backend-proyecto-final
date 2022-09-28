@@ -10,7 +10,7 @@ routerProductos.get('/:id?', isAdmin, async (req, res) => {
     const id = req.params.id;
     if (id) {
         const producto = await productosApi.getById(id);
-        (producto) ? res.send({Producto: producto}) : res.send({ error : 'Producto no encontrado' });
+        (producto) ? res.send(producto) : res.send({ error : 'Producto no encontrado' });
     } else {
         const productos = await productosApi.getAll();
         res.send(productos);
@@ -22,7 +22,7 @@ routerProductos.post('/', isAdmin, async (req, res) => {
     await productosApi.save(producto);
     res.send({
         message: 'Producto agregado',
-        producto: producto
+        producto
     })
 });
 
